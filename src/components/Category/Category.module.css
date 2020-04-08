@@ -1,0 +1,100 @@
+.categoryBlock {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 100px 450px;
+    background-color: rgb(242, 242, 242);
+    margin-top: 50px;
+    text-align: center;
+}
+
+.offerForYou {
+    padding-top: 80px;
+    font-size: 14px;
+    color: rgb(93, 101, 109);
+}
+
+.therapies {
+    padding-top: 20px;
+    font-size: 30px;
+    color: rgb(60, 60, 60);
+}
+
+.containerInfo {
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    justify-content: center;
+}
+.containerInfo > div {
+    width: 90%;
+    display: grid;
+    grid-template-rows: 230px 60px 60px 60px;
+}
+
+.infoItemTheraphy {
+    
+}
+
+.infoItemDisorder {
+    
+}
+
+.infoItemDepression {
+    
+}   
+.imgBlockFirst {
+    background-image: url('../../shared/images/img_post_blog-1.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 5px;    
+}
+.imgBlockSecond {
+    background-image: url('../../shared/images/img_post_blog-02.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 5px;    
+}
+.imgBlockThird {
+    background-image: url('../../shared/images/img_post_blog-3.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 5px;    
+}
+
+.someText {
+    font-size: 24px;
+    padding-top: 30px;
+}
+.someText span:hover {
+    color: rgb(97, 172, 200);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.someParagraph {
+    color: rgb(93, 101, 109);
+    padding-top: 15px;
+}
+.learnMore {
+    font-size: 12px;
+    padding-top: 20px;
+    color: rgb(97, 172, 200);
+}
+.learnMore > span:hover {
+    color: #000;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.arrowRightIcon > span:hover {
+    color: #000;
+    cursor: pointer;
+}
+
+.arrowRightIcon {
+    font-size: 10px;
+    padding-left: 5px;
+}
+
+

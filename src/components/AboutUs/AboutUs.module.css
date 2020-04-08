@@ -1,0 +1,71 @@
+.aboutUsContainer {
+    margin: 0 auto;
+    width: 90%;
+    height: 400px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 40px;
+}
+
+.videoBlock {
+    height: 400px;
+}
+
+.aboutBlock {
+    height: 400px;
+}
+
+.videoAbout {
+    width: 85%;
+    height: 380px;
+    margin: 0 auto;
+    -webkit-box-shadow: 0px 0px 84px -32px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 84px -32px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 64px -25px rgba(0,0,0,0.75);
+}
+.videoAbout{
+    background-image: url("../../shared/images/video_bg.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
+
+.infoAboutUs {
+    width: 90%;
+    height: 380px;
+    margin: 0 auto;
+}
+
+.whoWeAre {
+    margin-top: 60px;
+    font-size: 14px;
+    color: rgb(54, 54, 54);
+}
+
+.supportForYou {
+    margin-top: 15px;
+    font-size: 26px;
+    color: rgb(54, 54, 54);
+    font-weight: 500;
+}
+
+.clinic {
+    margin-top: 30px;
+    color: rgb(75, 75, 75);
+    width: 90%;
+    line-height: 1.5;
+}
+
+.btnAboutUs {
+    width: 150px;
+    height: 50px;
+    margin-top: 30px;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 14px;
+    border: none;
+    outline: none;
+    background-color: rgb(10, 206, 255);
+}
