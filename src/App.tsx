@@ -1,11 +1,15 @@
-import React from 'react';
-import MainPage from './layouts/MainPage/MainPage';
-
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authenticate } from "./actions/Users";
+ 
 
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(authenticate('supreme', 'supreme'))
+  }, [])
   return (
     <div className="App">
-      <MainPage />
     </div>
   );
 }
