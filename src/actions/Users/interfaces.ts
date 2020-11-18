@@ -63,7 +63,7 @@ export interface IGetAllUsersRequest {
     type: UserActionsTypes.GET_ALL_USERS_REQUEST, payload: null
 }
 export interface IGetAllUsersSuccess {
-    type: UserActionsTypes.GET_ALL_USERS_SUCCESS, payload: Array<IUser>
+    type: UserActionsTypes.GET_ALL_USERS_SUCCESS, payload: { users: Array<IUser> }
 }
 export interface IGetAllUsersFailure {
     type: UserActionsTypes.GET_ALL_USERS_FAILURE, payload: { error: Error | string | null }

@@ -1,22 +1,22 @@
 import { Reducer } from "react";
 import { IUser, IUserActions, UserActionsTypes } from "../../actions/Users/interfaces"
 
-interface IUsers {
+export interface IUsersInitialState {
     age: number
     first_name: string
     last_name: string
     salary: number,
-    allUsers: IUser[],
+    allUsers: IUser[] | null,
     userById: IUser,
     loading: boolean,
     error: null | Error | string
 }
-const initialState: IUsers = {
+const initialState: IUsersInitialState = {
     age: 0,
     first_name: '',
     last_name: '',
     salary: 0,
-    allUsers: [],
+    allUsers: null,
     userById: {
         first_name: '',
         last_name: '',
@@ -26,7 +26,7 @@ const initialState: IUsers = {
     loading: false,
     error: null,
 }
-export const usersReducer: Reducer<IUsers, any> = (state = initialState, action: IUserActions) => {
+export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialState, action: IUserActions) => {
     switch (action.type) {
         case UserActionsTypes.AUTHENTICATE_REQUEST:
             return { ...state, loading: false }
@@ -57,7 +57,8 @@ export const usersReducer: Reducer<IUsers, any> = (state = initialState, action:
         case UserActionsTypes.GET_ALL_USERS_REQUEST:
             return { ...state, loading: true }
         case UserActionsTypes.GET_ALL_USERS_SUCCESS:
-            return { ...state, loading: false }
+            const { users } = action.payload
+            return { ...state, loading: false, allUsers: [...users] }
         case UserActionsTypes.GET_ALL_USERS_FAILURE:
             return { ...state, loading: false, error: action.payload.error }
         default:

@@ -1,8 +1,9 @@
 
 import { AxiosResponse } from "axios";
-import * as jwt from "jsonwebtoken";
+
 import { Dispatch } from "react";
 import agent from "../../api";
+import { tokenToStorage } from "../../utils";
 import {
     IAuthRequest,
     UserActionsTypes,
@@ -35,15 +36,8 @@ export interface ITokenDecode {
     iat: number,
     exp: number
 }
-export const tokenToStorage = (token: string) => {
-    localStorage.setItem('token', token)
-    const decoded = jwt.decode(token)
-    return decoded as ITokenDecode
-}
-export const getAccessToken = () => {
-    const token = localStorage.getItem('token')
-    return token as String
-}
+
+
 const authRequest = (): IAuthRequest => {
     return { type: UserActionsTypes.AUTHENTICATE_REQUEST, payload: null }
 }
@@ -51,7 +45,7 @@ const authSuccess = (user: IUser): IAuthSuccess => {
     return { type: UserActionsTypes.AUTHENTICATE_SUCCESS, payload: { user } }
 }
 const authFailure = (error: Error | null | string): IAuthFailure => {
-    return { type: UserActionsTypes.AUTHENTICATE_FAILURE, payload: error }
+    return { type: UserActionsTypes.AUTHENTICATE_FAILURE, payload: { error } }
 }
 export const authenticate =
     (login: string, password: string) =>
@@ -77,7 +71,7 @@ const createUserSuccess = (user: IUser): ICreateUserSuccess => {
 }
 
 const createUserFailure = (error: Error | string | null): ICreateUserFailure => {
-    return { type: UserActionsTypes.CREATE_USER_FAILURE, payload: error }
+    return { type: UserActionsTypes.CREATE_USER_FAILURE, payload: { error } }
 }
 
 export const createUser = (
@@ -124,7 +118,7 @@ const updateUserSuccess = (user: IUser): IUpdateUserSuccess => {
     return { type: UserActionsTypes.UPDATE_USER_SUCCESS, payload: user }
 }
 const updateUserFailure = (error: Error | string | null): IUpdateUserFailure => {
-    return { type: UserActionsTypes.UPDATE_USER_FAILURE, payload: error }
+    return { type: UserActionsTypes.UPDATE_USER_FAILURE, payload: { error } }
 }
 export const updateUser = (
     login: string,
@@ -170,7 +164,7 @@ const getUserByIdSuccess = (user: IUser): IGetUserByIdSuccess => {
     return { type: UserActionsTypes.GET_USER_BY_ID_SUCCESS, payload: user }
 }
 const getUserByIdFailure = (error: Error | null | string): IGetUserByIdFailure => {
-    return { type: UserActionsTypes.GET_USER_BY_ID_FAILURE, payload: error }
+    return { type: UserActionsTypes.GET_USER_BY_ID_FAILURE, payload: { error } }
 }
 export const getUserById = (id: number | string) => async (dispatch: Dispatch<IUserActions>) => {
     try {
@@ -185,17 +179,19 @@ const getAllUsersRequest = (): IGetAllUsersRequest => {
     return { type: UserActionsTypes.GET_ALL_USERS_REQUEST, payload: null }
 }
 const getAllUsersSuccess = (users: IUser[]): IGetAllUsersSuccess => {
-    return { type: UserActionsTypes.GET_ALL_USERS_SUCCESS, payload: users }
+    return { type: UserActionsTypes.GET_ALL_USERS_SUCCESS, payload: { users } }
 }
 const getAllUsersFailure = (error: Error | null | string): IGetAllUsersFailure => {
-    return { type: UserActionsTypes.GET_ALL_USERS_FAILURE, payload: error }
+    return { type: UserActionsTypes.GET_ALL_USERS_FAILURE, payload: { error } }
 }
-
+interface IGetAllUsersResponse {
+    users: IUser[]
+}
 export const getAllUsers = () => async (dispatch: Dispatch<IUserActions>) => {
     try {
         dispatch(getAllUsersRequest())
-        const response = await agent.get('/users/getAll')
-        dispatch(getAllUsersSuccess(response.data))
+        const response: AxiosResponse<IGetAllUsersResponse> = await agent.get('/users/all')
+        dispatch(getAllUsersSuccess(response.data.users))
     } catch (error) {
         dispatch(getAllUsersFailure(error))
     }

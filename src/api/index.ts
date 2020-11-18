@@ -1,5 +1,6 @@
 import Axios from "axios";
-import { getAccessToken } from "../actions/Users";
+import { getAccessToken } from "../utils";
+
 
 const token = getAccessToken();
 const agent = Axios.create({

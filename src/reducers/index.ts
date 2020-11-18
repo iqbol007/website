@@ -1,14 +1,10 @@
 import { combineReducers } from "redux";
-import { History } from "history";
-// import { connectRouter } from "connected-react-router";
+import { IUsersInitialState, usersReducer } from "./Users";
 export interface IRootState {
-    //   readonly tasks: IinitialState;
-    //   readonly editTask: IinitialEditTaskState;
-    //   readonly descTask: IinitalDescState;
-    //   readonly router: any;
+    readonly users: IUsersInitialState;
 }
 
 export const rootReducer = () =>
     combineReducers({
-
+        users: usersReducer
     });
