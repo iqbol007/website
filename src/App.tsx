@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { authenticate } from "./actions/Users";
+import React, { useEffect, } from "react";
+import MessagesList from "./components/MessageList";
 import { UserList } from "./components/UsersList";
 
 
+
 function App() {
-  const dispatch = useDispatch()
+
   useEffect(() => {
-    dispatch(authenticate('supreme', 'supreme'))
-  }, [dispatch])
+
+
+  }, [])
+
+
   return (
-    <div className="App">
+    <div className="App" >
+      <MessagesList />
       <UserList />
     </div>
   );
