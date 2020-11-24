@@ -1,21 +1,24 @@
-import React, { useEffect, } from "react";
+import React, { useEffect } from "react";
+import LoginForm from "./components/LoginForm";
 import MessagesList from "./components/MessageList";
 import { UserList } from "./components/UsersList";
+// import { getAccessToken } from "./utils";
+// import { useDispatch, useSelector } from "react-redux";
+// import { ITokenDecode, userToStore } from "./actions/Users";
+// import { IRootState } from "./reducers";
+// import { IUsersInitialState } from "./reducers/Users";
+// import { IUser } from "./actions/Users/interfaces";
+
 
 
 
 function App() {
-
-  useEffect(() => {
-
-
-  }, [])
-
-
+ 
   return (
     <div className="App" >
-      <MessagesList />
-      <UserList />
+      <LoginForm />
+      {/* <MessagesList />
+      <UserList /> */}
     </div>
   );
 }

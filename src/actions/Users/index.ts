@@ -22,7 +22,9 @@ import {
     IGetUserByIdFailure,
     IGetAllUsersRequest,
     IGetAllUsersSuccess,
-    IGetAllUsersFailure
+    IGetAllUsersFailure,
+    IUserToStorage,
+    IUserLogOut
 } from "./interfaces";
 
 interface IAuthResponse {
@@ -195,4 +197,11 @@ export const getAllUsers = () => async (dispatch: Dispatch<IUserActions>) => {
     } catch (error) {
         dispatch(getAllUsersFailure(error))
     }
+}
+export const logout = (): IUserLogOut => {
+    localStorage.removeItem('token')
+    return { type: UserActionsTypes.LOG_OUT, payload: null }
+}
+export const userToStore = (user: ITokenDecode): IUserToStorage => {
+    return { type: UserActionsTypes.USER_TO_STORAGE, payload: user.user }
 }

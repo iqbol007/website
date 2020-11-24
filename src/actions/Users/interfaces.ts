@@ -1,3 +1,4 @@
+import { ITokenDecode } from ".";
 
 export enum UserActionsTypes {
     AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST',
@@ -14,7 +15,9 @@ export enum UserActionsTypes {
     GET_USER_BY_ID_FAILURE = 'GET_USER_BY_ID_FAILURE',
     CREATE_USER_REQUEST = 'CREATE_USER_REQUEST',
     CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS',
-    CREATE_USER_FAILURE = 'CREATE_USER_FAILURE'
+    CREATE_USER_FAILURE = 'CREATE_USER_FAILURE',
+    USER_TO_STORAGE = 'USER_TO_STORAGE',
+    LOG_OUT = 'LOG_OUT'
 }
 
 export interface IUser {
@@ -68,7 +71,14 @@ export interface IGetAllUsersSuccess {
 export interface IGetAllUsersFailure {
     type: UserActionsTypes.GET_ALL_USERS_FAILURE, payload: { error: Error | string | null }
 }
-
+export interface IUserToStorage {
+    type: UserActionsTypes.USER_TO_STORAGE
+    payload: IUser
+}
+export interface IUserLogOut {
+    type: UserActionsTypes.LOG_OUT
+    payload: null
+}
 export type IUserActions =
     IAuthFailure |
     IAuthRequest |
@@ -84,4 +94,6 @@ export type IUserActions =
     IGetAllUsersFailure |
     IGetUserByIdRequest |
     IGetUserByIdSuccess |
-    IGetUserByIdFailure;
+    IGetUserByIdFailure |
+    IUserToStorage |
+    IUserLogOut;

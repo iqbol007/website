@@ -2,7 +2,7 @@ import * as jwt from "jsonwebtoken";
 import { ITokenDecode } from "../actions/Users";
 export const getAccessToken = () => {
     const token = localStorage.getItem('token')
-    return token as String
+    return token as string
 }
 export const tokenToStorage = (token: string) => {
     localStorage.setItem('token', token)

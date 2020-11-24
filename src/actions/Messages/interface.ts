@@ -1,9 +1,10 @@
-export enum MessageActionTypes {
-    MESSAGE_SENT = 'MESSAGE_SENT',
-    MESSAGE_INCOME = 'MESSAGE_INCOME',
-    MESSAGE_EDIT = 'MESSAGE_EDIT',
-    MESSAGE_REMOVE = 'MESSAGE_REMOVE'
-}
+export const MessageActions = {
+    CREATE_MESSAGE: 'CREATE_MESSAGE',
+    GET_ALL_MESSAGES: 'GET_ALL_MESSAGES',
+    GET_MESSAGE_BY_ID: 'GET_MESSAGE_BY_ID',
+    REMOVE_MESSAGE: 'REMOVE_MESSAGE',
+    EDIT_MESSAGE: 'EDIT_MESSAGE',
+};
 export interface IMessageSent {
 
 }

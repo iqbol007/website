@@ -1,14 +1,16 @@
-import { MessageActionTypes } from "./interface"
+import { MessageActions } from "./interface"
 
-export const messageIncome = (message: any) => {
-    return { type: MessageActionTypes.MESSAGE_INCOME, payload: { message } }
+ 
+
+export const messageGetAll = (message: any) => {
+    return { type: MessageActions.GET_ALL_MESSAGES, payload: { message } }
 }
-export const messageSent = (message: any) => {
-    return { type: MessageActionTypes.MESSAGE_SENT, payload: { message } }
+export const messageCreate = (message: any) => {
+    return { type: MessageActions.CREATE_MESSAGE, payload: { message } }
 }
-export const messageRemove = (message: any) => {
-    return { type: MessageActionTypes.MESSAGE_REMOVE, payload: { message } }
+export const messageRemove = (id: any) => {
+    return { type: MessageActions.REMOVE_MESSAGE, payload: { id } }
 }
 export const messageEdit = (message: any) => {
-    return { type: MessageActionTypes.MESSAGE_EDIT, payload: { message } }
+    return { type: MessageActions.EDIT_MESSAGE, payload: { message } }
 }

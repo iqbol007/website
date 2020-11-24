@@ -2,20 +2,14 @@ import { Reducer } from "react";
 import { IUser, IUserActions, UserActionsTypes } from "../../actions/Users/interfaces"
 
 export interface IUsersInitialState {
-    age: number
-    first_name: string
-    last_name: string
-    salary: number,
     allUsers: IUser[] | null,
     userById: IUser,
     loading: boolean,
+    user: IUser | null
     error: null | Error | string
 }
 const initialState: IUsersInitialState = {
-    age: 0,
-    first_name: '',
-    last_name: '',
-    salary: 0,
+    user: null,
     allUsers: null,
     userById: {
         first_name: '',
@@ -32,7 +26,7 @@ export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialSt
             return { ...state, loading: false }
         case UserActionsTypes.AUTHENTICATE_SUCCESS:
             const { user } = action.payload;
-            return { ...state, ...user, loading: false }
+            return { ...state, user: { ...user }, loading: false }
         case UserActionsTypes.AUTHENTICATE_FAILURE:
             const { error } = action.payload
             return { ...state, error: error, loading: false }
@@ -45,7 +39,7 @@ export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialSt
         case UserActionsTypes.CREATE_USER_REQUEST:
             return { ...state, loading: true }
         case UserActionsTypes.CREATE_USER_SUCCESS:
-            return { ...state, loading: false }
+            return { ...state, loading: false };
         case UserActionsTypes.CREATE_USER_FAILURE:
             return { ...state, loading: false, error: action.payload.error }
         case UserActionsTypes.GET_USER_BY_ID_REQUEST:
@@ -61,6 +55,12 @@ export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialSt
             return { ...state, loading: false, allUsers: [...users] }
         case UserActionsTypes.GET_ALL_USERS_FAILURE:
             return { ...state, loading: false, error: action.payload.error }
+        case UserActionsTypes.USER_TO_STORAGE:
+            return { ...state, loading: false, user: { ...action.payload } }
+        case UserActionsTypes.LOG_OUT:
+            console.log(111122);
+
+            return { ...state, loading: false, user: null }
         default:
             return state
     }
