@@ -1,5 +1,6 @@
 import { Reducer } from "react";
 import { MessageActions } from "../../actions/Messages/interface";
+import { IUser } from "../../actions/Users/interfaces";
 
 export interface IMessage {
     id: string | number
@@ -10,19 +11,21 @@ export interface IMessage {
 export interface IInitialMessagesState {
     allMessages: Array<IMessage>
     edit_content: string
-    content: string
+    content: string,
+    activeUsers: IUser[],
 }
 const initialMessageState: IInitialMessagesState = {
-    allMessages: [], edit_content: '', content: ''
+    allMessages: [], edit_content: '', content: '', activeUsers: []
 }
 export const messagesReducer: Reducer<IInitialMessagesState, any> =
     (state = initialMessageState, action: any) => {
         switch (action.type) {
             case MessageActions.GET_ALL_MESSAGES: {
-                const { message } = action.payload
+                const { message, users } = action.payload;
                 return {
                     ...state,
-                    allMessages: [...state.allMessages, ...message]
+                    allMessages: [...state.allMessages, ...message],
+                    activeUsers: [...state.activeUsers, ...users]
                 }
             }
             case MessageActions.REMOVE_MESSAGE: {
@@ -34,12 +37,14 @@ export const messagesReducer: Reducer<IInitialMessagesState, any> =
             }
             case MessageActions.EDIT_MESSAGE: {
                 const { message } = action.payload;
-                console.log(message);
-
                 return {
                     ...state,
                     allMessages: [{ ...message }, ...state.allMessages.filter(o => o.id !== message.id)]
                 }
+            }
+            case MessageActions.CREATE_MESSAGE: {
+                const { message } = action.payload;
+                return { ...state, allMessages: [...state.allMessages, { ...message }] }
             }
             default:
                 return state

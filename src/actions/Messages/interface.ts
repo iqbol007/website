@@ -4,7 +4,9 @@ export const MessageActions = {
     GET_MESSAGE_BY_ID: 'GET_MESSAGE_BY_ID',
     REMOVE_MESSAGE: 'REMOVE_MESSAGE',
     EDIT_MESSAGE: 'EDIT_MESSAGE',
-};
+    NEW_USER_ONLINE: 'NEW_USER_ONLINE',
+    USER_ARE_DISCONNECT: 'USER_ARE_DISCONNECT',
+}
 export interface IMessageSent {
 
 }

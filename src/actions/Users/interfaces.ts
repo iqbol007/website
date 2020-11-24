@@ -21,6 +21,7 @@ export enum UserActionsTypes {
 }
 
 export interface IUser {
+    id: number
     age: number
     first_name: string
     last_name: string

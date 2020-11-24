@@ -13,12 +13,12 @@ import { UserList } from "./components/UsersList";
 
 
 function App() {
- 
+
   return (
     <div className="App" >
       <LoginForm />
-      {/* <MessagesList />
-      <UserList /> */}
+      <MessagesList />
+      <UserList />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 
-import { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios"
 
-import { Dispatch } from "react";
-import agent from "../../api";
-import { tokenToStorage } from "../../utils";
+import { Dispatch } from "react"
+import agent from "../../api"
+import { tokenToStorage } from "../../utils"
 import {
     IAuthRequest,
     UserActionsTypes,
@@ -25,7 +25,7 @@ import {
     IGetAllUsersFailure,
     IUserToStorage,
     IUserLogOut
-} from "./interfaces";
+} from "./interfaces"
 
 interface IAuthResponse {
     token: string
@@ -56,8 +56,8 @@ export const authenticate =
                 dispatch(authRequest())
                 const response: AxiosResponse<IAuthResponse>
                     = await agent
-                        .post('/users/authenticate', { login, password });
-                const decoded = tokenToStorage(response.data.token);
+                        .post('/users/authenticate', { login, password })
+                const decoded = tokenToStorage(response.data.token)
                 dispatch(authSuccess(decoded.user))
             } catch (error) {
                 dispatch(authFailure(error))
@@ -90,23 +90,23 @@ export const createUser = (
             first_name,
             last_name,
             age, salary
-        };
+        }
         const parsed = Object
             .entries(params)
             .reduce((acc: any, [key, value]) => {
                 if (value !== undefined) {
-                    acc[key] = value;
-                    return acc;
+                    acc[key] = value
+                    return acc
                 } else {
-                    return acc;
+                    return acc
                 }
-            }, {});
+            }, {})
         try {
 
             dispatch(createUserRequest())
             const response: AxiosResponse<ICreateUserResponse>
                 = await agent
-                    .post('/users/createUser', { ...parsed });
+                    .post('/users/createUser', { ...parsed })
 
             dispatch(createUserSuccess(response.data.user))
         } catch (error) {
@@ -136,23 +136,23 @@ export const updateUser = (
             first_name,
             last_name,
             age, salary
-        };
+        }
         const parsed = Object
             .entries(params)
             .reduce((acc: any, [key, value]) => {
                 if (value !== undefined) {
-                    acc[key] = value;
-                    return acc;
+                    acc[key] = value
+                    return acc
                 } else {
-                    return acc;
+                    return acc
                 }
-            }, {});
+            }, {})
         try {
 
             dispatch(updateUserReuquest())
             const response: AxiosResponse<ICreateUserResponse>
                 = await agent
-                    .post('/users/update', { ...parsed });
+                    .post('/users/update', { ...parsed })
 
             dispatch(updateUserSuccess(response.data.user))
         } catch (error) {
@@ -171,7 +171,7 @@ const getUserByIdFailure = (error: Error | null | string): IGetUserByIdFailure =
 export const getUserById = (id: number | string) => async (dispatch: Dispatch<IUserActions>) => {
     try {
         dispatch(getUserByIdRequest())
-        const response = await agent.get(`/users/userById?id=${id}`);
+        const response = await agent.get(`/users/userById?id=${id}`)
         dispatch(getUserByIdSuccess(response.data))
     } catch (error) {
         dispatch(getUserByIdFailure(error))
@@ -198,6 +198,7 @@ export const getAllUsers = () => async (dispatch: Dispatch<IUserActions>) => {
         dispatch(getAllUsersFailure(error))
     }
 }
+
 export const logout = (): IUserLogOut => {
     localStorage.removeItem('token')
     return { type: UserActionsTypes.LOG_OUT, payload: null }

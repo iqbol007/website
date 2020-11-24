@@ -12,6 +12,7 @@ const initialState: IUsersInitialState = {
     user: null,
     allUsers: null,
     userById: {
+        id: 0,
         first_name: '',
         last_name: '',
         age: 0,
