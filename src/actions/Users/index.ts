@@ -204,5 +204,5 @@ export const logout = (): IUserLogOut => {
     return { type: UserActionsTypes.LOG_OUT, payload: null }
 }
 export const userToStore = (user: ITokenDecode): IUserToStorage => {
-    return { type: UserActionsTypes.USER_TO_STORAGE, payload: user.user }
+    return { type: UserActionsTypes.USER_TO_STORAGE, payload: user?.user }
 }

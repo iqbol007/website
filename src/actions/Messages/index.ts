@@ -2,8 +2,8 @@ import { MessageActions } from "./interface"
 
 
 
-export const messageGetAll = (message: any, users: any) => {
-    return { type: MessageActions.GET_ALL_MESSAGES, payload: { message, users } }
+export const messageGetAll = (message: any) => {
+    return { type: MessageActions.GET_ALL_MESSAGES, payload: { message } }
 }
 export const messageCreate = (message: any) => {
     return { type: MessageActions.CREATE_MESSAGE, payload: { message } }
@@ -14,9 +14,12 @@ export const messageRemove = (id: any) => {
 export const messageEdit = (message: any) => {
     return { type: MessageActions.EDIT_MESSAGE, payload: { message } }
 }
-export const newUserOnline = (user: any) => {
-    return { type: MessageActions.NEW_USER_ONLINE, payload: { user } }
+export const getOnlineUsers = (users: any) => {
+    return { type: MessageActions.NEW_USER_ONLINE, payload: { users } }
 }
-export const userAreDisconnected = (id: any) => {
-    return { type: MessageActions.USER_ARE_DISCONNECT, payload: { id } }
+export const userAreDisconnected = (user: any) => {
+    return { type: MessageActions.USER_ARE_DISCONNECT, payload: { user: JSON.parse(user) } }
+}
+export const changeWSstatus = (status: string) => {
+    return { type: MessageActions.CHANGE_WS_STATUS, payload: status }
 }

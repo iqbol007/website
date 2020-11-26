@@ -7,27 +7,37 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
+	changeWSstatus,
 	messageCreate,
 	messageEdit,
 	messageGetAll,
 	messageRemove,
-	newUserOnline,
+	getOnlineUsers,
 	userAreDisconnected,
 } from '../../actions/Messages';
 import { MessageActions } from '../../actions/Messages/interface';
+import {
+	wsConnected,
+	wsConnecting,
+	wsConnectionError,
+} from '../../actions/Websocket';
 import { IRootState } from '../../reducers';
 
 import { IInitialMessagesState } from '../../reducers/Messages';
 import { IUsersInitialState } from '../../reducers/Users';
+import { IWSinitialState } from '../../reducers/Websocket';
 import { getAccessToken } from '../../utils';
 
 const MessagesList: React.FC = () => {
 	const wsRef = useRef<WebSocket | null>(null);
 	const [state, setState] = useState({ content: '', id: 0 });
-	const [wsConnectionError, setwsConnectionError] = useState(false);
 	const dispatch = useDispatch();
-	const { allMessages, activeUsers } = useSelector<any, IInitialMessagesState>(
-		(state) => state.messages,
+	const { allMessages, activeUsers } = useSelector<
+		IRootState,
+		IInitialMessagesState
+	>((state) => state.messages);
+	const { wsState } = useSelector<IRootState, IWSinitialState>(
+		(state) => state.websocketState,
 	);
 	const { user } = useSelector<IRootState, IUsersInitialState>(
 		(state) => state.users,
@@ -35,75 +45,69 @@ const MessagesList: React.FC = () => {
 	const [editing, setEditing] = useState(false);
 	const setUpWs = useCallback(
 		(ws: WebSocket) => {
-			console.log('ccc');
-
+			dispatch(wsConnecting());
 			ws.onopen = () => {
-				//TODO: for first we must send token ALWAYS!!!
-				setwsConnectionError(false);
+				dispatch(wsConnected());
+				dispatch(changeWSstatus(MessageActions.WS_CONNECTED));
 				const token = getAccessToken();
 				ws.send(
 					JSON.stringify({
-						type: MessageActions.GET_ALL_MESSAGES as string,
+						type: MessageActions.NEW_USER_ONLINE,
 						token,
 					}),
+				);
+				ws.send(
+					JSON.stringify({ type: MessageActions.GET_ALL_MESSAGES, token }),
 				);
 				wsRef.current = ws;
 			};
 			ws.onmessage = async (evt) => {
-				//TODO: must implement messages type of 'TYPING'
 				const data = JSON.parse(evt.data);
+				console.log(data);
+
 				switch (data.type) {
 					case MessageActions.GET_ALL_MESSAGES:
-						const { activeUsers } = data;
-						const parsed = Object.values(activeUsers).map((o) => {
-							//@ts-ignore
-							return JSON.parse(o);
-						});
-						dispatch(messageGetAll(data.messages, parsed));
-						break;
+						dispatch(messageGetAll(data.messages));
+						return;
 					case MessageActions.REMOVE_MESSAGE:
 						dispatch(messageRemove(data.id));
-						break;
+						return;
 					case MessageActions.EDIT_MESSAGE:
 						dispatch(messageEdit(data.message));
-						break;
+						return;
 					case MessageActions.CREATE_MESSAGE:
 						dispatch(messageCreate(data.message));
-						break;
+						return;
 					case MessageActions.NEW_USER_ONLINE:
-						console.log('new', data);
-
-						dispatch(newUserOnline(data.user));
-						break;
+						const { activeUsers } = data;
+						const parsed = Object.values(activeUsers).map((o) => {
+							return JSON.parse(o as string);
+						});
+						dispatch(getOnlineUsers(parsed));
+						return;
 					case MessageActions.USER_ARE_DISCONNECT:
-						console.log('dis', data);
-
-						dispatch(userAreDisconnected(data.id));
-						break;
+						dispatch(userAreDisconnected(data.user));
+						return;
+					case 'error':
+						console.log(data);
+						return;
 					default:
-						break;
+						return;
 				}
 			};
 			ws.onclose = () => {
-				//TODO: must say to user that you are offline
-				const token = getAccessToken();
-				ws.send(JSON.stringify({}));
+				dispatch(changeWSstatus(MessageActions.WS_DISCONNECT));
+				ws.send(JSON.stringify({ type: MessageActions.USER_ARE_DISCONNECT }));
 				wsRef.current = null;
 			};
 			ws.onerror = async (evt) => {
-				// TODO: Must impmlement  websocket connection error
-				// dispatch()
-				// console.log('error');
-				setwsConnectionError(true);
+				dispatch(wsConnectionError());
 			};
 		},
 		[dispatch],
 	);
 	useEffect(() => {
-		const token = getAccessToken();
-		const ws = new WebSocket(
-			(process.env.REACT_APP_WS_URL as string) + `/${token}`,
-		);
+		const ws = new WebSocket(process.env.REACT_APP_WS_URL as string);
 		setUpWs(ws);
 		return () => {
 			wsRef.current = null;
@@ -115,7 +119,6 @@ const MessagesList: React.FC = () => {
 
 	useEffect(() => {
 		contentRef.current?.focus();
-		console.log(allMessages);
 	}, [allMessages]);
 
 	const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -144,9 +147,6 @@ const MessagesList: React.FC = () => {
 				}),
 			);
 			setState({ content: '', id: 0 });
-			dispatch({
-				type: 'MESSAGE_SENT',
-			});
 			return;
 		} else {
 			handleSubmitEdit(state.id);
@@ -173,15 +173,13 @@ const MessagesList: React.FC = () => {
 		setState({ content: message.text_content, id: message.id });
 		setEditing(true);
 	};
-	if (!user) {
-		return null;
-	}
 	return (
 		<>
+			{wsState}
 			<div>
-				{activeUsers.map((o) => (
+				{activeUsers?.map((o) => (
 					<div key={Math.random() * 919191}>
-						{o.first_name} - {o.last_name}
+						{o?.first_name} - {o?.last_name}
 					</div>
 				))}
 			</div>
@@ -194,7 +192,6 @@ const MessagesList: React.FC = () => {
 				/>
 				<button>Send</button>
 			</form>
-			<div>{wsConnectionError && 'connection-error'}</div>
 			<div>
 				{allMessages.map((o) => (
 					<div key={Math.random() * 919191}>
