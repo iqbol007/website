@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import LoginForm from './components/LoginForm';
 import MessagesView from './components/Messages';
+import PostsList from './components/Posts';
 import { UserList } from './components/UsersList';
 import { IRootState } from './reducers';
 import { IInitialMessagesState } from './reducers/Messages';
@@ -27,6 +28,10 @@ function App() {
 				<div className="" style={{ marginLeft: 200 }}>
 					Users:
 					<UserList />
+				</div>
+				<div className="posts">
+					Posts:
+					<PostsList />
 				</div>
 			</div>
 		</div>

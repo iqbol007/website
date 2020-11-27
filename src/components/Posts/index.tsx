@@ -1,13 +1,30 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from '../../actions/Posts';
+import { IRootState } from '../../reducers';
+import { IinitialPostsState } from '../../reducers/Posts';
 
-const PostsView = () => {
+const PostsList = () => {
 	const dispatch = useDispatch();
+	const { posts } = useSelector<IRootState, IinitialPostsState>(
+		(state) => state.posts,
+	);
 	useEffect(() => {
-		// dispatch();
+		if (!posts) {
+			dispatch(getAllPosts());
+		}
 		return () => {};
-	}, []);
-	return <div></div>;
+	}, [posts]);
+	return (
+		<div>
+			{posts?.map((post) => (
+				<li key={post.id}>
+					<img src={post.media} alt={post.media_type} />
+					{post.content}
+				</li>
+			))}
+		</div>
+	);
 };
 
-export default PostsView;
+export default PostsList;
