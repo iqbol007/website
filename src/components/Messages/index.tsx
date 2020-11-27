@@ -28,7 +28,7 @@ import { IUsersInitialState } from '../../reducers/Users';
 import { IWSinitialState } from '../../reducers/Websocket';
 import { getAccessToken } from '../../utils';
 
-const MessagesList: React.FC = () => {
+const MessagesView: React.FC = () => {
 	const wsRef = useRef<WebSocket | null>(null);
 	const [state, setState] = useState({ content: '', id: 0 });
 	const dispatch = useDispatch();
@@ -177,6 +177,7 @@ const MessagesList: React.FC = () => {
 		<>
 			{wsState}
 			<div>
+				Online users:
 				{activeUsers?.map((o) => (
 					<div key={Math.random() * 919191}>
 						{o?.first_name} - {o?.last_name}
@@ -193,6 +194,7 @@ const MessagesList: React.FC = () => {
 				<button>Send</button>
 			</form>
 			<div>
+				Messages:
 				{allMessages.map((o) => (
 					<div key={Math.random() * 919191}>
 						{o.owner_fullname} - {o.text_content}
@@ -205,4 +207,4 @@ const MessagesList: React.FC = () => {
 	);
 };
 
-export default MessagesList;
+export default MessagesView;

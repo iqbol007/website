@@ -57,10 +57,6 @@ export const messagesReducer: Reducer<IInitialMessagesState, any> =
                 }
             case MessageActions.USER_ARE_DISCONNECT: {
                 const { user } = action.payload
-                console.log(state.activeUsers)
-                console.log(user)
-
-
                 return { ...state, activeUsers: [...state.activeUsers.filter(o => o.id !== user.id)] }
             }
             default:
