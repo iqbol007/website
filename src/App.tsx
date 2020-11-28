@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import LoginForm from './components/LoginForm';
 import MessagesView from './components/Messages';
+import PostCreateForm from './components/PostCreateForm';
 import PostsList from './components/Posts';
 import { UserList } from './components/UsersList';
 import { IRootState } from './reducers';
@@ -18,19 +19,21 @@ function App() {
 	const { user } = useSelector<IRootState, IUsersInitialState>(
 		(state) => state.users,
 	);
+
 	return (
 		<div className="App">
 			<div className="" style={{ display: 'flex' }}>
-				<div className="">
+				<div className="messages">
 					<LoginForm />
 					{user && <MessagesView />}
 				</div>
-				<div className="" style={{ marginLeft: 200 }}>
+				<div className="users" style={{ marginLeft: 200 }}>
 					Users:
 					<UserList />
 				</div>
-				<div className="posts">
+				<div className="posts" style={{ marginLeft: 200 }}>
 					Posts:
+					<PostCreateForm />
 					<PostsList />
 				</div>
 			</div>

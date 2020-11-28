@@ -10,7 +10,7 @@ const PostsList = () => {
 		(state) => state.posts,
 	);
 	useEffect(() => {
-		if (!posts) {
+		if (!posts.length) {
 			dispatch(getAllPosts());
 		}
 		return () => {};
@@ -19,8 +19,17 @@ const PostsList = () => {
 		<div>
 			{posts?.map((post) => (
 				<li key={post.id}>
-					<img src={post.media} alt={post.media_type} />
+					{
+						<img
+							src={`http://localhost:9999/static/${post.media}`}
+							alt={post.media_type}
+						/>
+					}
 					{post.content}
+					<div>
+						<button>remove</button>
+						<button>edit it</button>
+					</div>
 				</li>
 			))}
 		</div>

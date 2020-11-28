@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios"
 import { Dispatch } from "react"
 import agent from "../../api"
+import { IRootState } from "../../reducers"
 import {
     IcreatePostFailure,
     IcreatePostRequest,
@@ -52,15 +53,18 @@ export const createPostSuccess = (post: Ipost): IcreatePostSuccess => {
 export const createPostFailure = (error: null | string | Error): IcreatePostFailure => {
     return { type: PostsActions.CREATE_POST_FAILURE, payload: { error } }
 }
-export const createPost = (content: string, file: File | null) => async (dispatch: Dispatch<IpostActions>) => {
+export const createPost = (content: string, file: File | null) => async (dispatch: Dispatch<IpostActions>, getState: any) => {
     try {
+        console.log(content, file)
+        const { user } = getState().users
         dispatch(createPostRequest())
         const data = new FormData()
         data.append('content', content)
+        data.append('owner_id', user.id)
         if (file) {
-            data.append('file', file)
+            data.append('post_media', file)
         }
-        const response: AxiosResponse<Ipost> = await agent.post('/posts/createPost', { data })
+        const response: AxiosResponse<Ipost> = await agent.post('/posts/createPost', data)
         dispatch(createPostSuccess(response.data))
     } catch (error) {
         dispatch(createPostFailure(error))

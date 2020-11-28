@@ -9,7 +9,7 @@ const UserListView: React.FC<IUserList> = ({ users }) => {
 			{users &&
 				users?.map((o) => {
 					return (
-						<div>
+						<div key={o.id}>
 							{o.first_name} {o.last_name}
 						</div>
 					);
