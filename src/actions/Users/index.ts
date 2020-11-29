@@ -61,7 +61,7 @@ export const authenticate =
                 const decoded = tokenToStorage(response.data.token)
                 dispatch(authSuccess(decoded.user))
                 if (response.status === 200) {
-                    history.push('/home')
+                    history.push('/posts')
                 }
             } catch (error) {
                 dispatch(authFailure(error))

@@ -1,10 +1,10 @@
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	font-family: 'Poppins-Light', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	background-color: rgb(141, 141, 141);
+	background-color: rgb(22, 27, 32);
 }
 
 code {
@@ -13,6 +13,27 @@ code {
 }
 
 * {
+	/* background-color: rgb(22, 27, 32); */
 	margin: 0;
 	padding: 0;
+}
+@font-face {
+	font-family: 'Quicksand-Regular';
+	src: url('./shared/assets/fonts/QuickSand/Quicksand-Regular.ttf');
+}
+@font-face {
+	font-family: 'Quicksand-Bold';
+	src: url('./shared/assets/fonts/QuickSand/Quicksand-Bold.ttf');
+}
+@font-face {
+	font-family: 'Quicksand-Medium';
+	src: url('./shared/assets/fonts/QuickSand/Quicksand-Medium.ttf');
+}
+@font-face {
+	font-family: 'Quicksand-Light';
+	src: url('./shared/assets/fonts/QuickSand/Quicksand-Light.ttf');
+}
+@font-face {
+	font-family: 'Poppins-Light';
+	src: url('./shared/assets/fonts/Poppins/Poppins-Light.ttf');
 }

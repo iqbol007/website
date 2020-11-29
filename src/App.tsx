@@ -17,6 +17,7 @@ import { IUsersInitialState } from './reducers/Users';
 import { getAccessToken } from './utils';
 import * as jwt from 'jsonwebtoken';
 import { ITokenDecode, userToStore } from './actions/Users';
+import { Gallary } from './layouts/Gallary'
 
 function App() {
 	const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function App() {
 		}
 	}, [user]);
 	return (
-		<div className="App">
+		<>
 			<Router>
 				<Switch>
 					<Route path="/login" exact component={LoginForm} />
@@ -41,10 +42,12 @@ function App() {
 					<AuthenticateRoute path="/users" component={UserList} />
 					<AuthenticateRoute path="/posts" component={PostsList} />
 					<AuthenticateRoute path="/home" component={Home} />
+					<Route path="/gallary" component={Gallary} />
+
 					<Redirect to="/login" />
 				</Switch>
 			</Router>
-		</div>
+		</>
 	);
 }
 

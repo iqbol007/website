@@ -32,6 +32,7 @@ export interface Ipost {
     post_likes: number | string
     updatedAt: string
     removed: boolean
+    post_liked_users: []
 }
 export interface IgetAllPostsRequest { type: PostsActions.GET_ALL_POSTS_REQUEST }
 export interface IgetAllPostsSuccess { type: PostsActions.GET_ALL_POSTS_SUCCESS, payload: { posts: Ipost[] } }
@@ -50,7 +51,7 @@ export interface IremovePostSuccess { type: PostsActions.REMOVE_POST_SUCCESS, pa
 export interface IremovePostFailure { type: PostsActions.REMOVE_POST_FAILURE, payload: { error: Error | string | null } }
 
 export interface IlikePostRequest { type: PostsActions.POST_LIKE_REQUEST }
-export interface IlikePostSuccess { type: PostsActions.POST_LIKE_SUCCESS, payload: { id: string | number } }
+export interface IlikePostSuccess { type: PostsActions.POST_LIKE_SUCCESS, payload: { post: Ipost } }
 export interface IlikePostFailure { type: PostsActions.POST_LIKE_FAILURE, payload: { error: Error | string | null } }
 
 export interface IcreatePostRequest { type: PostsActions.CREATE_POST_REQUEST }

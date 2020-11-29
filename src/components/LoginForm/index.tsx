@@ -21,7 +21,6 @@ const LoginForm = () => {
 	);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		// dispatch(logout());
 		if (!user) {
 			const token = getAccessToken();
 			if (token) {
@@ -47,30 +46,57 @@ const LoginForm = () => {
 		setstate({ login: '', password: '' });
 	};
 	return (
-		<div className="loginForm">
-			<div>
-				<label htmlFor="#login">Login:</label>
-				<Input
-					type="text"
-					name="login"
-					id="login"
-					onChange={handleChange}
-					value={state.login}
-				/>
-				<label htmlFor="#password">Password:</label>
-				<Input
-					type="password"
-					name="password"
-					id="password"
-					onChange={handleChange}
-					value={state.password}
-				/>
-			</div>
-			{error && <Label color="red"> error</Label>}
-			<div>
-				<button onClick={handleSubmit} className="ui teal basic button">
-					Log in
-				</button>
+		<div className="login-page">
+			<div className="ui middle aligned center aligned grid login-form">
+				<div className="column">
+					<h2 className="ui image header">
+						<div className="content">Log-in to your account</div>
+					</h2>
+					<form
+						action="https://s.codepen.io/voltron2112/debug/PqrEPM?"
+						method="get"
+						className="ui large form">
+						<div className="ui stacked secondary  segment">
+							<div className="field">
+								<div className="ui left icon input">
+									<i className="user icon"></i>
+									<input
+										type="text"
+										name="login"
+										id="login"
+										placeholder="Login"
+										onChange={handleChange}
+										value={state.login}
+									/>
+								</div>
+							</div>
+							<div className="field">
+								<div className="ui left icon input">
+									<i className="lock icon"></i>
+									<input
+										type="password"
+										name="password"
+										id="password"
+										placeholder="Password"
+										onChange={handleChange}
+										value={state.password}
+									/>
+								</div>
+							</div>
+							<div
+								className="ui fluid large teal submit button"
+								onClick={handleSubmit}>
+								Login
+							</div>
+						</div>
+
+						<div className="ui error message"></div>
+					</form>
+
+					<div className="ui message">
+						New to us? <a href="#">Register</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

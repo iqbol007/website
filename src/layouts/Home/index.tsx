@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PostCreateForm from '../../components/PostCreateForm'
+import { TopBar } from '../../components/TopBar';
 
 const Home = () => {
 	return (
 		<div>
-			<Link to="/users">Users</Link>
-			<Link to="/posts">Posts</Link>
-			<Link to="/messages">Messages</Link>
+			<PostCreateForm />
 		</div>
-	);
+	); 
 };
 
 export { Home };

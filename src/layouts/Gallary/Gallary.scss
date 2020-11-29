@@ -1,0 +1,331 @@
+::-webkit-scrollbar {
+	display: none;
+}
+
+:root {
+	--bg: #eee;
+	--bs: 3px 3px 7px 0 #0004, -3px -3px 10px 0 #fff;
+	--col: #666;
+	--ts: 1px 1px 7px #0003;
+}
+// :root {
+// 	--bg: #222;
+// 	--bs: 3px 3px 7px 0 #000, -3px -3px 10px 0 #fff1;
+// 	--col: #ccc;
+// 	--ts: 1px 1px 7px #000;
+// }
+
+.body {
+	margin: 0;
+	background: var(--bg);
+	font-family: Segoe UI;
+	color: var(--col);
+	user-select: none;
+}
+
+.nav {
+	box-shadow: var(--bs);
+	background: var(--bg);
+	display: flex;
+	height: 75px;
+	position: fixed;
+	width: 100vw;
+	top: 0;
+	z-index: 1;
+}
+
+.nav .profile {
+	width: 55px;
+	height: 55px;
+	border-radius: 50%;
+	margin: 10px;
+	background: var(--bg);
+	box-shadow: var(--bs);
+	text-align: center;
+	font-size: 1.8em;
+	line-height: 50px;
+}
+
+.nav .search {
+	display: flex;
+}
+
+.search .button {
+	position: absolute;
+	left: 475px;
+	line-height: 75px;
+	font-size: 1.3em;
+}
+
+.search input {
+	background: transparent;
+	border: 0;
+	outline: 0;
+	height: 50px;
+	width: 400px;
+	font-size: 1.2em;
+	color: var(--col);
+	margin: 12.5px;
+	font-family: Segoe UI;
+	border-radius: 25px;
+	padding: 0 15px;
+	background: var(--bg);
+	box-shadow: var(--bs);
+}
+
+.nav .options {
+	position: absolute;
+	right: 0;
+	display: flex;
+	line-height: 75px;
+}
+
+.options .font {
+	display: flex;
+	letter-spacing: -4px;
+	margin: 0 20px;
+}
+
+.font .slider {
+	margin: -5px 10px;
+}
+
+.slider input {
+	appearance: none;
+	height: 2px;
+	background: var(--bg);
+	box-shadow: var(--bs);
+	outline: none;
+}
+
+.slider input::-webkit-slider-thumb {
+	appearance: none;
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	background: var(--bg);
+	box-shadow: var(--bs);
+}
+
+.options .dark {
+	letter-spacing: 2px;
+	display: flex;
+}
+
+.dark .button {
+	width: 40px;
+	height: 20px;
+	margin: 27.5px 10px;
+	border-radius: 10px;
+	background: var(--bg);
+	box-shadow: var(--bs);
+	overflow: hidden;
+	transition: 0.25s all ease;
+	cursor: pointer;
+}
+
+.dark .button .tape {
+	width: 40px;
+	height: 20px;
+	background: #842bd7;
+	position: relative;
+	border-radius: 20px;
+	box-shadow: inset 2px 2px 10px 0 #0002;
+	margin-left: -20px;
+	transition: 0.25s all ease;
+}
+
+.dark .button .slider {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: var(--bg);
+	box-shadow: var(--bs);
+	float: right;
+}
+
+.dark .active .tape {
+	margin-left: 0;
+}
+
+.options .ham {
+	width: 50px;
+	height: 50px;
+	background: var(--bg);
+	box-shadow: var(--bs);
+	margin: 12.5px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.ham div {
+	width: 30px;
+	height: 4px;
+	background: var(--col);
+	margin: 7px 10px;
+	border-radius: 5px;
+}
+
+#a {
+	margin-top: 12px;
+}
+
+.trending {
+	margin-top: 75px;
+	height: 40vh;
+	overflow: auto;
+	white-space: nowrap;
+}
+
+.trending .card {
+	background: var(--bg);
+	box-shadow: var(--bs);
+	display: inline-block;
+	height: calc(40vh - 20px);
+	width: 300px;
+	margin: 10px 0 10px 10px;
+	border-radius: 10px;
+	background: url('https://cdn.climatechangenews.com/files/2019/12/09161458/adventure-awesome-boardwalk-726298.jpg');
+	background-size: cover;
+	overflow: hidden;
+}
+
+.trending .card .overlay {
+	width: 300px;
+	height: calc(40vh - 20px);
+	border-radius: 10px;
+	position: relative;
+	background: linear-gradient(to bottom, transparent, #000c);
+}
+
+.trending .card .title {
+	position: absolute;
+	bottom: 0;
+	margin: 20px;
+	color: #fff;
+	font-size: 1.3em;
+	letter-spacing: 2px;
+}
+
+.trending .card .heart {
+	margin-top: 10px;
+	width: 50px;
+	text-align: center;
+	margin-left: 250px;
+	color: #eee;
+	text-shadow: var(--ts);
+	font-size: 1.7em;
+	cursor: pointer;
+	transition: 0.25s all ease;
+}
+
+.recent {
+	float: left;
+}
+
+.archives {
+	float: right;
+}
+
+.recent,
+.archives {
+	width: calc(50vw - 10px);
+	margin: 10px 5px;
+}
+
+.recent .story,
+.archives .story {
+	height: 75px;
+	width: calc(100% - 10px);
+	background: var(--bg);
+	box-shadow: var(--bs);
+	margin: 15px 5px;
+	border-radius: 10px;
+}
+
+.story .icon {
+	width: 50px;
+	height: 50px;
+	margin: 12.5px;
+	border-radius: 50%;
+	float: left;
+	background: var(--bg);
+	box-shadow: var(--bs);
+}
+
+.story .heart {
+	float: right;
+	line-height: 75px;
+	margin-top: -57px;
+	text-align: center;
+	width: 50px;
+	font-size: 1.5em;
+	color: #eee;
+	text-shadow: var(--ts);
+	cursor: pointer;
+	transition: 0.25s all ease;
+}
+
+.story .title {
+	line-height: 40px;
+	font-size: 1.2em;
+}
+
+.story .excerpt {
+	font-size: 0.8em;
+}
+
+.recent .header,
+.archives .header {
+	font-size: 1.4em;
+	margin: 0 0 10px 10px;
+}
+
+.trending .card .active-heart {
+	color: #ff4033;
+}
+
+.story .active-heart {
+	color: #ff4033;
+}
+
+.story .icon {
+	font-size: 1.8em;
+	text-align: center;
+	line-height: 50px;
+}
+
+@media screen and (max-width: 1050px) {
+	.story .excerpt {
+		display: none;
+	}
+
+	.story .title {
+		line-height: 75px;
+	}
+
+	.story .heart {
+		margin-top: -75px;
+	}
+
+	.nav .search input {
+		width: 200px;
+	}
+
+	.nav .search .button {
+		left: 275px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.nav .font,
+	.nav .dark {
+		display: none;
+	}
+
+	.recent,
+	.archives {
+		float: none;
+		width: calc(100% - 10px);
+	}
+}

@@ -148,8 +148,8 @@ const checkUnauthorizedResponse = (error: any, dispatch: any) => {
 const postLikeRequest = (): IlikePostRequest => {
     return { type: PostsActions.POST_LIKE_REQUEST }
 }
-const postLikeSuccess = (id: string | number): IlikePostSuccess => {
-    return { type: PostsActions.POST_LIKE_SUCCESS, payload: { id } }
+const postLikeSuccess = (post: Ipost): IlikePostSuccess => {
+    return { type: PostsActions.POST_LIKE_SUCCESS, payload: { post } }
 }
 const postLikeFailure = (error: Error | string | null): IlikePostFailure => {
     return { type: PostsActions.POST_LIKE_FAILURE, payload: { error } }
@@ -158,13 +158,11 @@ const postLikeFailure = (error: Error | string | null): IlikePostFailure => {
 export const postLike = (post_id: string | number) => async (dispatch: Dispatch<IpostActions>, getState: any) => {
     try {
         const { user: { id } } = getState().users
-
-
         dispatch(postLikeRequest())
-        const response = await agent.post('/posts/like', { user_id: id, post_id })
-        console.log(response)  
+        const { data }: AxiosResponse<Ipost> = await agent.post('/posts/like', { user_id: id, post_id })
+        console.log(data)
 
-        dispatch(postLikeSuccess(response.data))
+        dispatch(postLikeSuccess(data))
     } catch (error) {
         dispatch(postLikeFailure(error))
     }

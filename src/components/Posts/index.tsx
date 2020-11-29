@@ -4,6 +4,7 @@ import { getAllPosts, postLike, removePost } from '../../actions/Posts';
 import { IRootState } from '../../reducers';
 import { IinitialPostsState } from '../../reducers/Posts';
 import PostCard from '../../shared/Card';
+import PostCreateForm from '../PostCreateForm';
 import './Posts.scss';
 const PostsList = () => {
 	const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const PostsList = () => {
 	return (
 		<div className="posts-page">
 			<div className="posts">
-				Posts
 				{posts?.map((post) => (
 					<PostCard
 						key={post.id}
