@@ -42,7 +42,7 @@ function App() {
 					<AuthenticateRoute path="/users" component={UserList} />
 					<AuthenticateRoute path="/posts" component={PostsList} />
 					<AuthenticateRoute path="/home" component={Home} />
-					<Route path="/gallary" component={Gallary} />
+					{/* <Route path="/gallary" component={Gallary} /> */}
 
 					<Redirect to="/login" />
 				</Switch>

@@ -6,6 +6,7 @@ import React, {
 	ReactText,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Icon } from 'semantic-ui-react';
 import {
 	changeWSstatus,
 	messageCreate,
@@ -27,6 +28,7 @@ import { IInitialMessagesState } from '../../reducers/Messages';
 import { IUsersInitialState } from '../../reducers/Users';
 import { IWSinitialState } from '../../reducers/Websocket';
 import { getAccessToken } from '../../utils';
+import './Messages.scss';
 
 const MessagesView: React.FC = () => {
 	const wsRef = useRef<WebSocket | null>(null);
@@ -174,36 +176,40 @@ const MessagesView: React.FC = () => {
 		setEditing(true);
 	};
 	return (
-		<>
-			{wsState}
-			<div>
+		<div className="messages">
+			{/* {wsState} */}
+			{/* <div>
 				Online users:
 				{activeUsers?.map((o) => (
 					<div key={Math.random() * 919191}>
 						{o?.first_name} - {o?.last_name}
 					</div>
 				))}
+			</div> */}
+			<div className=" ">
+				{allMessages.map((o) => (
+					<div key={Math.random() * 919191} className="ui raised segment">
+						<p>
+							{o.owner_fullname} - {o.text_content}
+							<i
+								className="trash alternate icon"
+								onClick={() => hendleRemove(o.id)}></i>
+							<i className="edit icon" onClick={() => handleEdit(o)}></i>
+						</p>
+					</div>
+				))}
 			</div>
-			<form onSubmit={handleSubmit}>
+			<div className="message-send-form">
 				<input
 					ref={contentRef}
 					name="content"
 					value={state.content}
 					onChange={handleChange}
 				/>
-				<button>Send</button>
-			</form>
-			<div>
-				Messages:
-				{allMessages.map((o) => (
-					<div key={Math.random() * 919191}>
-						{o.owner_fullname} - {o.text_content}
-						<button onClick={() => hendleRemove(o.id)}>Remove</button>
-						<button onClick={() => handleEdit(o)}>edit</button>
-					</div>
-				))}
+
+				<button onClick={handleSubmit}>Send</button>
 			</div>
-		</>
+		</div>
 	);
 };
 

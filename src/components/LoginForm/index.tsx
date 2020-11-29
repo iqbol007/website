@@ -10,7 +10,6 @@ import * as jwt from 'jsonwebtoken';
 import { IRootState } from '../../reducers';
 import { IUsersInitialState } from '../../reducers/Users';
 import { getAccessToken } from '../../utils';
-import { Input, Label } from 'semantic-ui-react';
 import './LoginForm.scss';
 import { useHistory } from 'react-router-dom';
 const LoginForm = () => {
@@ -49,12 +48,12 @@ const LoginForm = () => {
 		<div className="login-page">
 			<div className="ui middle aligned center aligned grid login-form">
 				<div className="column">
-					<h2 className="ui image header">
+					{/* <h2 className="ui image header">
 						<div className="content">Log-in to your account</div>
-					</h2>
+					</h2> */}
 					<form
-						action="https://s.codepen.io/voltron2112/debug/PqrEPM?"
-						method="get"
+						// action="https://s.codepen.io/voltron2112/debug/PqrEPM?"
+						// method="get"
 						className="ui large form">
 						<div className="ui stacked secondary  segment">
 							<div className="field">
@@ -93,9 +92,9 @@ const LoginForm = () => {
 						<div className="ui error message"></div>
 					</form>
 
-					<div className="ui message">
+					{/* <div className="ui message">
 						New to us? <a href="#">Register</a>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</div>
