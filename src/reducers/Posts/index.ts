@@ -39,7 +39,7 @@ export const postsReducer: Reducer<IinitialPostsState, IpostActions> = (state = 
         case PostsActions.REMOVE_POST_REQUEST:
             return state
         case PostsActions.REMOVE_POST_SUCCESS:
-            return state
+            return { ...state, posts: [...state.posts.filter(item => item.id != action.payload.id)] }
         case PostsActions.REMOVE_POST_FAILURE:
             return state
         default:

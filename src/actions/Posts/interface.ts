@@ -1,3 +1,5 @@
+import { IUserLogOut } from "../Users/interfaces"
+
 export enum PostsActions {
     GET_ALL_POSTS_REQUEST = 'GET_ALL_POSTS_REQUEST',
     GET_ALL_POSTS_SUCCESS = 'GET_ALL_POSTS_SUCCESS',
@@ -14,6 +16,9 @@ export enum PostsActions {
     GET_POST_BY_ID_REQUEST = 'GET_POST_BY_ID_REQUEST',
     GET_POST_BY_ID_SUCCESS = 'GET_POST_BY_ID_SUCCESS',
     GET_POST_BY_ID_FAILURE = 'GET_POST_BY_ID_FAILURE',
+    POST_LIKE_REQUEST = 'POST_LIKE_REQUEST',
+    POST_LIKE_SUCCESS = 'POST_LIKE_SUCCESS',
+    POST_LIKE_FAILURE = 'POST_LIKE_FAILURE',
 }
 
 export interface Ipost {
@@ -24,6 +29,7 @@ export interface Ipost {
     post_id: string | number
     media_type: string
     media: string,
+    post_likes: number | string
     updatedAt: string
     removed: boolean
 }
@@ -40,8 +46,12 @@ export interface IupdatePostSuccess { type: PostsActions.UPDATE_POST_SUCCESS, pa
 export interface IupdatePostFailure { type: PostsActions.UPDATE_POST_FAILURE, payload: { error: Error | string | null } }
 
 export interface IremovePostRequest { type: PostsActions.REMOVE_POST_REQUEST }
-export interface IremovePostSuccess { type: PostsActions.REMOVE_POST_SUCCESS, payload: { post: Ipost } }
+export interface IremovePostSuccess { type: PostsActions.REMOVE_POST_SUCCESS, payload: { id: string | number } }
 export interface IremovePostFailure { type: PostsActions.REMOVE_POST_FAILURE, payload: { error: Error | string | null } }
+
+export interface IlikePostRequest { type: PostsActions.POST_LIKE_REQUEST }
+export interface IlikePostSuccess { type: PostsActions.POST_LIKE_SUCCESS, payload: { id: string | number } }
+export interface IlikePostFailure { type: PostsActions.POST_LIKE_FAILURE, payload: { error: Error | string | null } }
 
 export interface IcreatePostRequest { type: PostsActions.CREATE_POST_REQUEST }
 export interface IcreatePostSuccess { type: PostsActions.CREATE_POST_SUCCESS, payload: { post: Ipost } }
@@ -63,4 +73,8 @@ export type IpostActions =
     IremovePostFailure |
     IcreatePostRequest |
     IcreatePostSuccess |
-    IcreatePostFailure 
+    IcreatePostFailure |
+    IUserLogOut |
+    IlikePostRequest |
+    IlikePostSuccess |
+    IlikePostFailure

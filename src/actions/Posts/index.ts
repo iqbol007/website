@@ -1,7 +1,8 @@
 import { AxiosResponse } from "axios"
 import { Dispatch } from "react"
 import agent from "../../api"
-import { IRootState } from "../../reducers"
+import { getAccessToken } from "../../utils"
+import { logout } from "../Users"
 import {
     IcreatePostFailure,
     IcreatePostRequest,
@@ -21,11 +22,23 @@ import {
     IupdatePostSuccess,
     PostsActions,
     Ipost,
+    IlikePostRequest,
+    IlikePostSuccess,
+    IlikePostFailure,
 } from "./interface"
 interface IPostsResponse {
     posts: Ipost[]
+
 }
 
+agent.interceptors.request.use((accepted) => {
+    const token = getAccessToken()
+    accepted.headers = { ...accepted.headers, 'Authorization': `Bearer ${token}` }
+    return accepted
+}, (rejrcted) => {
+    console.log('rejrcted', rejrcted)
+    return Promise.reject(rejrcted)
+})
 export const getAllPostsRequest = (): IgetAllPostsRequest => {
     return { type: PostsActions.GET_ALL_POSTS_REQUEST }
 }
@@ -42,6 +55,7 @@ export const getAllPosts = () => async (dispatch: Dispatch<IpostActions>) => {
         dispatch(getAllPostsSuccess(posts))
     } catch (error) {
         dispatch(getAllPostsFailure(error))
+        checkUnauthorizedResponse(error, dispatch)
     }
 }
 export const createPostRequest = (): IcreatePostRequest => {
@@ -55,7 +69,6 @@ export const createPostFailure = (error: null | string | Error): IcreatePostFail
 }
 export const createPost = (content: string, file: File | null) => async (dispatch: Dispatch<IpostActions>, getState: any) => {
     try {
-        console.log(content, file)
         const { user } = getState().users
         dispatch(createPostRequest())
         const data = new FormData()
@@ -112,8 +125,8 @@ export const getPostById = (id: string | number) => async (dispatch: Dispatch<Ip
 export const removePostRequest = (): IremovePostRequest => {
     return { type: PostsActions.REMOVE_POST_REQUEST }
 }
-export const removePostSuccess = (post: Ipost): IremovePostSuccess => {
-    return { type: PostsActions.REMOVE_POST_SUCCESS, payload: { post } }
+export const removePostSuccess = (id: string | number): IremovePostSuccess => {
+    return { type: PostsActions.REMOVE_POST_SUCCESS, payload: { id } }
 }
 export const removePostFailure = (error: Error | string | null): IremovePostFailure => {
     return { type: PostsActions.REMOVE_POST_FAILURE, payload: { error } }
@@ -121,9 +134,38 @@ export const removePostFailure = (error: Error | string | null): IremovePostFail
 export const removePost = (id: number | string) => async (dispatch: Dispatch<IpostActions>) => {
     try {
         dispatch(removePostRequest())
-        const response: AxiosResponse<Ipost> = await agent.delete(`/posts/delete?id=${id}`)
-        dispatch(removePostSuccess(response.data))
+        const response: AxiosResponse<any> = await agent.delete(`/posts/delete?id=${id}`)
+        dispatch(removePostSuccess(response.data.id))
     } catch (error) {
         dispatch(removePostFailure(error))
+    }
+}
+const checkUnauthorizedResponse = (error: any, dispatch: any) => {
+    if (error.response.status === 401) {
+        dispatch(logout())
+    }
+}
+const postLikeRequest = (): IlikePostRequest => {
+    return { type: PostsActions.POST_LIKE_REQUEST }
+}
+const postLikeSuccess = (id: string | number): IlikePostSuccess => {
+    return { type: PostsActions.POST_LIKE_SUCCESS, payload: { id } }
+}
+const postLikeFailure = (error: Error | string | null): IlikePostFailure => {
+    return { type: PostsActions.POST_LIKE_FAILURE, payload: { error } }
+}
+
+export const postLike = (post_id: string | number) => async (dispatch: Dispatch<IpostActions>, getState: any) => {
+    try {
+        const { user: { id } } = getState().users
+
+
+        dispatch(postLikeRequest())
+        const response = await agent.post('/posts/like', { user_id: id, post_id })
+        console.log(response)  
+
+        dispatch(postLikeSuccess(response.data))
+    } catch (error) {
+        dispatch(postLikeFailure(error))
     }
 }

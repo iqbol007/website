@@ -1,4 +1,4 @@
-import { ITokenDecode } from ".";
+import { ITokenDecode } from "."
 
 export enum UserActionsTypes {
     AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST',
@@ -19,7 +19,6 @@ export enum UserActionsTypes {
     USER_TO_STORAGE = 'USER_TO_STORAGE',
     LOG_OUT = 'LOG_OUT'
 }
-
 export interface IUser {
     id: number
     age: number
@@ -97,4 +96,4 @@ export type IUserActions =
     IGetUserByIdSuccess |
     IGetUserByIdFailure |
     IUserToStorage |
-    IUserLogOut;
+    IUserLogOut

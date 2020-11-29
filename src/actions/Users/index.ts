@@ -1,9 +1,9 @@
 
 import { AxiosResponse } from "axios"
-
+import { push } from 'connected-react-router'
 import { Dispatch } from "react"
 import agent from "../../api"
-import { tokenToStorage } from "../../utils"
+import { getAccessToken, tokenToStorage } from "../../utils"
 import {
     IAuthRequest,
     UserActionsTypes,
@@ -39,7 +39,8 @@ export interface ITokenDecode {
     exp: number
 }
 
-
+const token = getAccessToken()
+agent.defaults.headers.common.Authorization = `Bearer ${token}`
 const authRequest = (): IAuthRequest => {
     return { type: UserActionsTypes.AUTHENTICATE_REQUEST, payload: null }
 }
@@ -50,8 +51,8 @@ const authFailure = (error: Error | null | string): IAuthFailure => {
     return { type: UserActionsTypes.AUTHENTICATE_FAILURE, payload: { error } }
 }
 export const authenticate =
-    (login: string, password: string) =>
-        async (dispatch: Dispatch<IUserActions>) => {
+    (login: string, password: string, history: any) =>
+        async (dispatch: Dispatch<any>) => {
             try {
                 dispatch(authRequest())
                 const response: AxiosResponse<IAuthResponse>
@@ -59,11 +60,17 @@ export const authenticate =
                         .post('/users/authenticate', { login, password })
                 const decoded = tokenToStorage(response.data.token)
                 dispatch(authSuccess(decoded.user))
+                if (response.status === 200) {
+                    history.push('/home')
+                }
             } catch (error) {
                 dispatch(authFailure(error))
             }
         }
 
+function name() {
+
+}
 const createUserRequest = (): ICreateUserRequest => {
     return { type: UserActionsTypes.CREATE_USER_REQUEST, payload: null }
 }

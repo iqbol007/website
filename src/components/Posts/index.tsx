@@ -1,37 +1,44 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPosts } from '../../actions/Posts';
+import { getAllPosts, postLike, removePost } from '../../actions/Posts';
 import { IRootState } from '../../reducers';
 import { IinitialPostsState } from '../../reducers/Posts';
-
+import PostCard from '../../shared/Card';
+import './Posts.scss';
 const PostsList = () => {
 	const dispatch = useDispatch();
 	const { posts } = useSelector<IRootState, IinitialPostsState>(
 		(state) => state.posts,
 	);
 	useEffect(() => {
-		if (!posts.length) {
+		if (posts.length === 0) {
 			dispatch(getAllPosts());
 		}
+
 		return () => {};
 	}, [posts]);
+	const handleLike = (id: string | number) => {
+		console.log(id);
+
+		dispatch(postLike(id));
+	};
 	return (
-		<div>
-			{posts?.map((post) => (
-				<li key={post.id}>
-					{
-						<img
-							src={`http://localhost:9999/static/${post.media}`}
-							alt={post.media_type}
-						/>
-					}
-					{post.content}
-					<div>
-						<button>remove</button>
-						<button>edit it</button>
-					</div>
-				</li>
-			))}
+		<div className="posts-page">
+			<div className="posts">
+				Posts
+				{posts?.map((post) => (
+					<PostCard
+						key={post.id}
+						postId={post.post_id}
+						postContent={post.content}
+						postCreatedAt={post.createdAt}
+						postImage={`${process.env.REACT_APP_FILE_PATH}/${post.media}`}
+						postOwner={`${post.owner_id}`}
+						postLikes={post.post_likes}
+						onLike={(id: string | number) => handleLike(id)}
+					/>
+				))}
+			</div>
 		</div>
 	);
 };
