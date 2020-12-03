@@ -1,19 +1,19 @@
 import React, {
+	ReactText,
+	useCallback,
 	useEffect,
 	useRef,
-	useCallback,
 	useState,
-	ReactText,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Icon } from 'semantic-ui-react';
 import {
 	changeWSstatus,
+	getOnlineUsers,
 	messageCreate,
 	messageEdit,
 	messageGetAll,
 	messageRemove,
-	getOnlineUsers,
+	typing,
 	userAreDisconnected,
 } from '../../actions/Messages';
 import { MessageActions } from '../../actions/Messages/interface';
@@ -27,7 +27,7 @@ import { IRootState } from '../../reducers';
 import { IInitialMessagesState } from '../../reducers/Messages';
 import { IUsersInitialState } from '../../reducers/Users';
 import { IWSinitialState } from '../../reducers/Websocket';
-import { getAccessToken } from '../../utils';
+import { getAccessToken, setFocus } from '../../utils';
 import './Messages.scss';
 
 const MessagesView: React.FC = () => {
@@ -43,6 +43,9 @@ const MessagesView: React.FC = () => {
 	);
 	const { user } = useSelector<IRootState, IUsersInitialState>(
 		(state) => state.users,
+	);
+	const { who_type } = useSelector<IRootState, IInitialMessagesState>(
+		(state) => state.messages,
 	);
 	const [editing, setEditing] = useState(false);
 	const setUpWs = useCallback(
@@ -90,6 +93,11 @@ const MessagesView: React.FC = () => {
 					case MessageActions.USER_ARE_DISCONNECT:
 						dispatch(userAreDisconnected(data.user));
 						return;
+					case MessageActions.TYPING:
+						dispatch(typing(data.user));
+						console.log(data);
+
+						return;
 					case 'error':
 						console.log(data);
 						return;
@@ -122,10 +130,16 @@ const MessagesView: React.FC = () => {
 	useEffect(() => {
 		contentRef.current?.focus();
 	}, [allMessages]);
-
+	const token = getAccessToken();
 	const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = evt.target;
 		setState((prev) => ({ ...prev, content: value }));
+		wsRef.current?.send(
+			JSON.stringify({
+				type: MessageActions.TYPING,
+				token,
+			}),
+		);
 		dispatch({
 			type: 'MESSAGE_CONTENT_CHANGE',
 			payload: {
@@ -137,6 +151,7 @@ const MessagesView: React.FC = () => {
 	const handleSubmit = (evt: React.FormEvent) => {
 		evt.preventDefault();
 		const token = getAccessToken();
+		setFocus();
 		if (!editing) {
 			wsRef.current?.send(
 				JSON.stringify({
@@ -154,7 +169,17 @@ const MessagesView: React.FC = () => {
 			handleSubmitEdit(state.id);
 		}
 	};
-
+	useEffect(() => {
+		let timeOut: any;
+		if (who_type) {
+			timeOut = setTimeout(() => {
+				dispatch(typing(null));
+			}, 4000);
+		}
+		return () => {
+			timeOut && clearTimeout(timeOut);
+		};
+	}, [who_type]);
 	const hendleRemove = (id: string | number) => {
 		wsRef.current?.send(
 			JSON.stringify({ type: MessageActions.REMOVE_MESSAGE, id }),
@@ -177,28 +202,43 @@ const MessagesView: React.FC = () => {
 	};
 	return (
 		<div className="messages">
-			{/* {wsState} */}
-			{/* <div>
-				Online users:
-				{activeUsers?.map((o) => (
-					<div key={Math.random() * 919191}>
-						{o?.first_name} - {o?.last_name}
-					</div>
-				))}
-			</div> */}
-			<div className=" ">
-				{allMessages.map((o) => (
-					<div key={Math.random() * 919191} className="ui raised segment">
-						<p>
-							{o.owner_fullname} - {o.text_content}
-							<i
-								className="trash alternate icon"
-								onClick={() => hendleRemove(o.id)}></i>
-							<i className="edit icon" onClick={() => handleEdit(o)}></i>
-						</p>
-					</div>
-				))}
+			<div className="messages-container">
+				{allMessages.map((o) => {
+					if (o.owner_fullname === `${user?.first_name} ${user?.last_name}`) {
+						return (
+							<div key={Math.random() * 919191} className="message-item-right">
+								<span className={'message-owner'}>
+									<i
+										className="trash alternate icon"
+										onClick={() => hendleRemove(o.id)}
+									/>
+									<i className="edit icon" onClick={() => handleEdit(o)} />
+								</span>
+
+								<p className={'message-text'}>{o.text_content}</p>
+							</div>
+						);
+					}
+					return (
+						<div key={Math.random() * 919191} className="message-item">
+							<span className={'message-owner'}>
+								<span style={{ marginLeft: 5 }}>{o.owner_fullname}</span>
+								<span style={{ marginLeft: 20 }}>
+									<i
+										className="trash alternate icon"
+										onClick={() => hendleRemove(o.id)}
+									/>
+									<i className="edit icon" onClick={() => handleEdit(o)} />
+								</span>
+							</span>
+							<p className={'message-text'}>{o.text_content}</p>
+						</div>
+					);
+				})}
 			</div>
+			{who_type && who_type?.id !== user?.id
+				? `${who_type?.first_name} is typing...`
+				: ''}
 			<div className="message-send-form">
 				<input
 					ref={contentRef}
@@ -206,8 +246,9 @@ const MessagesView: React.FC = () => {
 					value={state.content}
 					onChange={handleChange}
 				/>
-
-				<button onClick={handleSubmit}>Send</button>
+				<button onClick={handleSubmit}>
+					<i className="paper plane outline icon" />
+				</button>
 			</div>
 		</div>
 	);

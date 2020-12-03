@@ -16,7 +16,8 @@ const initialState: IUsersInitialState = {
         first_name: '',
         last_name: '',
         age: 0,
-        salary: 0
+        salary: 0,
+        avatar_image:''
     },
     loading: false,
     error: null,

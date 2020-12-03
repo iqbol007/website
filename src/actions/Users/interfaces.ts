@@ -1,5 +1,3 @@
-import { ITokenDecode } from "."
-
 export enum UserActionsTypes {
     AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST',
     AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS',
@@ -24,7 +22,8 @@ export interface IUser {
     age: number
     first_name: string
     last_name: string
-    salary: number
+    salary: number,
+    avatar_image: string
 }
 export interface IAuthRequest {
     type: UserActionsTypes.AUTHENTICATE_REQUEST, payload: null

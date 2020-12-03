@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, Icon, Image } from 'semantic-ui-react';
+import {Card, Icon, Image} from 'semantic-ui-react';
+
 interface IPostCard {
 	postImage: string;
 	postContent: string;
@@ -18,8 +19,8 @@ const PostCard: React.FC<IPostCard> = ({
 	onLike,
 	postId,
 }) => (
-	<Card>
-		<Image src={postImage} wrapped ui={false} />
+	<Card centered={true}>
+		<Image src={postImage} ui={true}/>
 		<Card.Content>
 			<Card.Header>{postOwner}</Card.Header>
 			<Card.Meta>
@@ -29,7 +30,7 @@ const PostCard: React.FC<IPostCard> = ({
 		</Card.Content>
 		<Card.Content extra>
 			<a>
-				<Icon name="like" onClick={() => onLike(postId)} />
+				<Icon name="like" onClick={() => onLike(postId)}/>
 				{postLikes}
 			</a>
 		</Card.Content>
