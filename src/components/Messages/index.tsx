@@ -117,7 +117,7 @@ const MessagesView: React.FC = () => {
 		[dispatch],
 	);
 	useEffect(() => {
-		const ws = new WebSocket(process.env.REACT_APP_WS_URL as string);
+		const ws = new WebSocket(process.env.REACT_APP_PROD_WS_URL as string);
 		setUpWs(ws);
 		return () => {
 			wsRef.current = null;
