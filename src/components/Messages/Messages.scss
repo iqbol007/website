@@ -1,38 +1,39 @@
 .messages {
-	margin: 20px;
-	//border: 1px solid rgba(0,0,0,.4);
-	//width: auto;
+	//margin: 20px;
+	width: 50%;
+	//display: flex;
+	margin: auto;
+	margin-top: 20px;
+	//justify-content: center;
 	.messages-container {
 		overflow-y: scroll;
 		overflow-x: hidden;
 		margin: auto;
-		max-height: 500px;
-		max-width: 600px;
+		height: 80vh;
 		display: flex;
 		flex-direction: column;
-
 		.message-item {
 			box-shadow: 3px 2px 4px rgba(0, 0, 0, 0.4);
 			border-radius: 4px;
-			//padding: 8px;
+			max-width: 60%;
 			margin: auto;
 			margin-top: 6px;
 			margin-bottom: 6px;
 			margin-left: 0;
 			border: 1px solid rgba(0, 0, 0, 0.3);
-
 			.message-owner {
 				font-size: 10px;
 				font-style: italic;
 				letter-spacing: 1px;
 				color: #116969;
 				margin-left: 4px;
-				//margin: 3px;
 			}
-
 			.message-text {
 				margin: 10px;
+				max-width: 100%;
 				margin-top: 0;
+				width: content-box;
+				word-wrap: break-word;
 			}
 		}
 
@@ -69,10 +70,10 @@
 	.message-send-form {
 		margin: auto;
 		margin-top: 10px;
-		width: 600px;
+		//width: 600px;
 
 		input {
-			width: 500px;
+			width: 96%;
 			height: 30px;
 			border: 1px solid rgba(0, 0, 0, 0.4);
 			border-radius: 10px;

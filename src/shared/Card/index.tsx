@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Icon, Image} from 'semantic-ui-react';
-
+import './style.scss';
 interface IPostCard {
 	postImage: string;
 	postContent: string;
@@ -19,8 +19,11 @@ const PostCard: React.FC<IPostCard> = ({
 	onLike,
 	postId,
 }) => (
-	<Card centered={true}>
-		<Image src={postImage} ui={true}/>
+	<Card centered={true}  className={'card'}>
+		<Card.Header className={'header-r'}>
+			Hello
+		</Card.Header>
+		<Image src={postImage} ui={true} className={'image'}/>
 		<Card.Content>
 			<Card.Header>{postOwner}</Card.Header>
 			<Card.Meta>

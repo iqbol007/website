@@ -1,19 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, {useState} from 'react';
 import './TopBar.scss';
 import {useDispatch} from "react-redux";
-import {logout} from "../../actions/Users";
+import {Menu} from "semantic-ui-react";
 import Account from "./Account/Account";
+import {Link} from "react-router-dom";
+import {logout} from "../../actions/Users";
+
 const TopBar = () => {
-	const  dispatch = useDispatch()
+	const dispatch = useDispatch()
+	const [state, setState] = useState({activeItem: ''})
+
+	const handleItemClick = () => {
+
+
+	}
 	return (
-		<div className="top-bar">
-			<Account/>
-			<Link to="/users">Users</Link>
-			<Link to="/posts">Posts</Link>
-			<Link to="/messages">Messages</Link>
-			<a onClick={()=>dispatch(logout())}>logout</a>
-		</div>
+
+		<Menu fluid={true}>
+			<Link to={'/posts'} className={'link'}>
+				<Menu.Item
+					name='posts'
+					active={state.activeItem === 'posts'}
+					onClick={handleItemClick}
+				/>
+			</Link>
+			<Link to={'/messages'} className={'link'}>
+				<Menu.Item
+					name='messages'
+					active={state.activeItem === 'messages'}
+					onClick={handleItemClick}
+				/>
+			</Link>
+			<Link to={'/users'} className={'link'}>
+				<Menu.Item
+					name='users'
+					active={state.activeItem === 'users'}
+					onClick={handleItemClick}
+				/>
+			</Link>
+			<Menu.Item name={'account'} position="right">
+				<Link to={'/account'} className={'link'}>
+					<Account/>
+				</Link>
+			</Menu.Item>
+			<Menu.Item
+				name={'Logout'}
+				onClick={() => dispatch(logout())}
+			/>
+		</Menu>
 	);
 };
 

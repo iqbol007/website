@@ -11,3 +11,15 @@
 		width: 100%;
 	}
 }
+@media (max-width: 767px) {
+	.wrapper {
+		justify-content: center;
+
+		.menu {
+			display: none;
+		}
+		.route{
+			margin: 0 auto;
+		}
+	}
+}

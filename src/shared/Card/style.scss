@@ -1,0 +1,29 @@
+.card {
+  max-width: 550px !important;
+  width: 100% !important;
+  margin: 20px !important;
+
+  &:hover {
+    .header-r {
+      opacity: 1;
+    }
+  }
+
+  .header-r {
+    transition: all .3s;
+    opacity: 0;
+    margin-bottom: -39px;
+    z-index: 100;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.4);
+
+    color: #fff
+  }
+}
+
+@media (max-width: 676px) {
+  .card {
+    width: 92% !important;
+    margin: 20px !important;
+  }
+}
