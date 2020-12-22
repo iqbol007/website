@@ -1,5 +1,5 @@
+import { IUser } from "../Users/interfaces"
 import { MessageActions } from "./interface"
-
 
 
 export const messageGetAll = (message: any) => {
@@ -22,4 +22,7 @@ export const userAreDisconnected = (user: any) => {
 }
 export const changeWSstatus = (status: string) => {
     return { type: MessageActions.CHANGE_WS_STATUS, payload: status }
+}
+export const typing = (whoTyping: IUser | null) => {
+    return { type: MessageActions.TYPING, payload: { user: whoTyping } }
 }

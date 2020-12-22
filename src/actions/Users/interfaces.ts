@@ -1,5 +1,3 @@
-import { ITokenDecode } from ".";
-
 export enum UserActionsTypes {
     AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST',
     AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS',
@@ -19,13 +17,13 @@ export enum UserActionsTypes {
     USER_TO_STORAGE = 'USER_TO_STORAGE',
     LOG_OUT = 'LOG_OUT'
 }
-
 export interface IUser {
     id: number
     age: number
     first_name: string
     last_name: string
-    salary: number
+    salary: number,
+    avatar_image: string
 }
 export interface IAuthRequest {
     type: UserActionsTypes.AUTHENTICATE_REQUEST, payload: null
@@ -97,4 +95,4 @@ export type IUserActions =
     IGetUserByIdSuccess |
     IGetUserByIdFailure |
     IUserToStorage |
-    IUserLogOut;
+    IUserLogOut

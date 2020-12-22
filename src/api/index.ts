@@ -1,13 +1,6 @@
-import Axios from "axios";
-import { getAccessToken } from "../utils";
+import Axios from "axios"
 
-
-const token = getAccessToken();
 const agent = Axios.create({
-    baseURL: 'http://localhost:9999/api',
-    headers: token ? {
-        'Authorization': `Bearer ${token}`
-    } : {}
-
-});
+    baseURL: process.env.REACT_APP_PROD_API,
+})
 export default agent

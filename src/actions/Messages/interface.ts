@@ -9,7 +9,8 @@ export const MessageActions = {
     CHANGE_WS_STATUS: 'CHANGE_WS_STATUS',
     WS_CONNECTED: 'WS_CONNECTED',
     WS_DISCONNECT: 'WS_DISCONNECT',
-    WS_CLOSED: 'WS_CLOSED'
+    WS_CLOSED: 'WS_CLOSED',
+    TYPING: 'TYPING'
 }
 export interface IMessageSent {
 

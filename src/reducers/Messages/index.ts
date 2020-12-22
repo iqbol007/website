@@ -14,9 +14,10 @@ export interface IInitialMessagesState {
     content: string,
     activeUsers: IUser[],
     status: string | null
+    who_type: IUser | null
 }
 const initialMessageState: IInitialMessagesState = {
-    allMessages: [], edit_content: '', content: '', activeUsers: [], status: null
+    allMessages: [], edit_content: '', content: '', activeUsers: [], status: null, who_type: null
 }
 export const messagesReducer: Reducer<IInitialMessagesState, any> =
     (state = initialMessageState, action: any) => {
@@ -59,6 +60,8 @@ export const messagesReducer: Reducer<IInitialMessagesState, any> =
                 const { user } = action.payload
                 return { ...state, activeUsers: [...state.activeUsers.filter(o => o.id !== user.id)] }
             }
+            case MessageActions.TYPING:
+                return { ...state, who_type: action.payload.user }
             default:
                 return state
         }

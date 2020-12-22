@@ -1,4 +1,4 @@
-import { Reducer } from "react";
+import { Reducer } from "react"
 import { IUser, IUserActions, UserActionsTypes } from "../../actions/Users/interfaces"
 
 export interface IUsersInitialState {
@@ -16,7 +16,8 @@ const initialState: IUsersInitialState = {
         first_name: '',
         last_name: '',
         age: 0,
-        salary: 0
+        salary: 0,
+        avatar_image:''
     },
     loading: false,
     error: null,
@@ -26,7 +27,7 @@ export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialSt
         case UserActionsTypes.AUTHENTICATE_REQUEST:
             return { ...state, loading: false }
         case UserActionsTypes.AUTHENTICATE_SUCCESS:
-            const { user } = action.payload;
+            const { user } = action.payload
             return { ...state, user: { ...user }, loading: false }
         case UserActionsTypes.AUTHENTICATE_FAILURE:
             const { error } = action.payload
@@ -40,7 +41,7 @@ export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialSt
         case UserActionsTypes.CREATE_USER_REQUEST:
             return { ...state, loading: true }
         case UserActionsTypes.CREATE_USER_SUCCESS:
-            return { ...state, loading: false };
+            return { ...state, loading: false }
         case UserActionsTypes.CREATE_USER_FAILURE:
             return { ...state, loading: false, error: action.payload.error }
         case UserActionsTypes.GET_USER_BY_ID_REQUEST:
@@ -59,8 +60,6 @@ export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialSt
         case UserActionsTypes.USER_TO_STORAGE:
             return { ...state, loading: false, user: { ...action.payload } }
         case UserActionsTypes.LOG_OUT:
-            console.log(111122);
-
             return { ...state, loading: false, user: null }
         default:
             return state

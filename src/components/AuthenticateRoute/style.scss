@@ -1,0 +1,25 @@
+.top-bar {
+}
+.wrapper {
+	display: flex;
+
+	.menu {
+		margin: 20px auto auto 20px;
+	}
+	.route {
+		margin: auto 110px auto 0px;
+		width: 100%;
+	}
+}
+@media (max-width: 767px) {
+	.wrapper {
+		justify-content: center;
+
+		.menu {
+			display: none;
+		}
+		.route{
+			margin: 0 auto;
+		}
+	}
+}
