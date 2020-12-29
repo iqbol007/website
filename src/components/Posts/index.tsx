@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllPosts, postLike, removePost } from '../../actions/Posts';
-import { IRootState } from '../../reducers';
-import { IinitialPostsState } from '../../reducers/Posts';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAllPosts, postLike} from '../../actions/Posts';
+import {IRootState} from '../../reducers';
+import {IinitialPostsState} from '../../reducers/Posts';
 import PostCard from '../../shared/Card';
 import './Posts.scss';
+import {filePath} from "../../api/routes";
+
 const PostsList = () => {
 	const dispatch = useDispatch();
-	const { posts } = useSelector<IRootState, IinitialPostsState>(
+	const {posts} = useSelector<IRootState, IinitialPostsState>(
 		(state) => state.posts,
 	);
 	useEffect(() => {
@@ -31,7 +33,7 @@ const PostsList = () => {
 						postId={post.post_id}
 						postContent={post.content}
 						postCreatedAt={post.createdAt}
-						postImage={`${process.env.REACT_APP_FILE_PATH}/${post.media}`}
+						postImage={`${filePath}/${post.media}`}
 						postOwner={`${post.owner_id}`}
 						postLikes={post.post_likes}
 						onLike={(id: string | number) => handleLike(id)}

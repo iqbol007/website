@@ -45,7 +45,7 @@ const LoginForm = () => {
 	return (
 		<div className="login-page">
 			<div className={'login-from'}>
-				<div className="ui middle aligned center aligned grid">
+				<div className="ui middle aligned center aligned grid login-from">
 					<div className="column">
 
 						<form className="ui large form">
