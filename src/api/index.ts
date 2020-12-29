@@ -1,6 +1,7 @@
 import Axios from "axios"
+import { apiRoutes } from "./routes"
 
 const agent = Axios.create({
-    baseURL: process.env.REACT_APP_PROD_API,
+    baseURL: apiRoutes,
 })
 export default agent

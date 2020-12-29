@@ -1,11 +1,5 @@
-import React, {
-	ReactText,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {ReactText, useCallback, useEffect, useRef, useState,} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
 	changeWSstatus,
 	getOnlineUsers,
@@ -16,26 +10,22 @@ import {
 	typing,
 	userAreDisconnected,
 } from '../../actions/Messages';
-import { MessageActions } from '../../actions/Messages/interface';
-import {
-	wsConnected,
-	wsConnecting,
-	wsConnectionError,
-} from '../../actions/Websocket';
-import { IRootState } from '../../reducers';
+import {MessageActions} from '../../actions/Messages/interface';
+import {wsConnected, wsConnecting, wsConnectionError,} from '../../actions/Websocket';
+import {IRootState} from '../../reducers';
 
-import { IInitialMessagesState } from '../../reducers/Messages';
-import { IUsersInitialState } from '../../reducers/Users';
-import { IWSinitialState } from '../../reducers/Websocket';
-import { getAccessToken, setFocus } from '../../utils';
+import {IInitialMessagesState} from '../../reducers/Messages';
+import {IUsersInitialState} from '../../reducers/Users';
+import {IWSinitialState} from '../../reducers/Websocket';
+import {getAccessToken, setFocus} from '../../utils';
 import './Messages.scss';
+import {websocketRoute} from "../../api/routes";
 
 const MessagesView: React.FC = () => {
 	const wsRef = useRef<WebSocket | null>(null);
-	const [state, setState] = useState({ content: '', id: 0 });
+	const [state, setState] = useState({content: '', id: 0});
 	const dispatch = useDispatch();
-	const { allMessages, activeUsers } = useSelector<
-		IRootState,
+	const {allMessages, activeUsers} = useSelector<IRootState,
 		IInitialMessagesState
 	>((state) => state.messages);
 	const { wsState } = useSelector<IRootState, IWSinitialState>(
@@ -117,7 +107,7 @@ const MessagesView: React.FC = () => {
 		[dispatch],
 	);
 	useEffect(() => {
-		const ws = new WebSocket(process.env.REACT_APP_PROD_WS_URL as string);
+		const ws = new WebSocket(websocketRoute as string);
 		setUpWs(ws);
 		return () => {
 			wsRef.current = null;
