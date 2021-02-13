@@ -2,6 +2,7 @@
 import { AxiosResponse } from "axios"
 import { Dispatch } from "react"
 import agent from "../../api"
+import { IRootState } from "../../reducers"
 import { getAccessToken, tokenToStorage } from "../../utils"
 import {
     IAuthRequest,
@@ -51,7 +52,8 @@ const authFailure = (error: Error | null | string): IAuthFailure => {
 }
 export const authenticate =
     (login: string, password: string, history: any) =>
-        async (dispatch: Dispatch<any>) => {
+        async (dispatch: Dispatch<any>, getState: () => IRootState) => {
+            const users = getState().users
             try {
                 dispatch(authRequest())
                 const response: AxiosResponse<IAuthResponse>
@@ -62,6 +64,7 @@ export const authenticate =
                 if (response.status === 200) {
                     history.push('/posts')
                 }
+
             } catch (error) {
                 dispatch(authFailure(error))
             }

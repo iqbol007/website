@@ -17,7 +17,7 @@ const initialState: IUsersInitialState = {
         last_name: '',
         age: 0,
         salary: 0,
-        avatar_image:''
+        avatar_image: ''
     },
     loading: false,
     error: null,
@@ -25,7 +25,7 @@ const initialState: IUsersInitialState = {
 export const usersReducer: Reducer<IUsersInitialState, any> = (state = initialState, action: IUserActions) => {
     switch (action.type) {
         case UserActionsTypes.AUTHENTICATE_REQUEST:
-            return { ...state, loading: false }
+            return { ...state, loading: true }
         case UserActionsTypes.AUTHENTICATE_SUCCESS:
             const { user } = action.payload
             return { ...state, user: { ...user }, loading: false }
